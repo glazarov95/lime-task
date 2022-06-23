@@ -120,3 +120,19 @@ describe("refundNotBoughtProduct", function () {
     );
   });
 });
+
+describe("updateProduct", function () {
+  it("Should update product quantity", async function () {
+    const Store = await ethers.getContractFactory("Store", owner);
+    const store = await Store.deploy();
+    await store.deployed();
+
+    await store.addProduct("Book", 10);
+
+    await store.updateProductQuantity(0, 20);
+
+    const product = await store.getProductById(0);
+    assert(product.quantity == 20);
+  });
+});
+
